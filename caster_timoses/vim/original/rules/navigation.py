@@ -42,6 +42,9 @@ class NavigationRule(MappingRule):
         "[<n>] tab left": Key("g, s-t") * Repeat(extra="n"),
         "tab [<n>]": Key("%(n)d, g, t"),
 
+        # Lines:
+        "go line <n100>": Text("%(n100)dgg"),
+
         # New:
         "new tab": Key("colon") + Text("tabnew") + Key("enter"),
         "new split": Key("colon") + Text("split") + Key("enter"),
@@ -49,6 +52,7 @@ class NavigationRule(MappingRule):
     }
     extras = [
         IntegerRef("n", 1, 10),
+        IntegerRef("n100", 1, 100),
     ]
     defaults = {
         "n": 1,
