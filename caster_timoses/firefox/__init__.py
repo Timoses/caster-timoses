@@ -1,37 +1,63 @@
+import platform
+
 from dragonfly import Repeat, Pause, Function, Choice, MappingRule, Dictation, IntegerRef, Key, Text, Grammar
 
 from castervoice import Plugin
+
+system = platform.system()
+if system == "Darwin":
+    CTRL = "w"
+    JUMP_WALL = {"left": "w-left",
+                 "right": "w-right",
+                 "up": "w-up",
+                 "down": "w-down"}
+    JUMP_WORD = {"left": "a-left",
+                 "right": "a-right"}
+    WORD_DELETE_MODIFIER = "a"
+    DELETE_DIR = {"left": "backspace",
+                  "right": "delete"}
+else:
+    CTRL = "c"
+    JUMP_WALL = {"left": "home",
+                 "right": "end",
+                 "up": "c-home",
+                 "down": "c-end"}
+    JUMP_WORD = {"left": "c-left",
+                 "right": "c-right"}
+    WORD_DELETE_MODIFIER = "c"
+    DELETE_DIR = {"left": "backspace",
+                  "right": "delete"}
 
 
 class FirefoxRule(MappingRule):
     mapping = {
         "(new window|window new)":
-            Key("w-n"),
-        "(new incognito window | incognito)":
+            Key("{}-n".format(CTRL)),
+        "new private window|private window new":
             Key("ws-p"),
         "window close|close all tabs":
-            Key("cs-w"),
+            Key("{}s-w".format(CTRL)),
         "new tab [<n>]|tab new [<n>]":
-            Key("w-t") * Repeat(extra="n"),
+            Key("{}-t".format(CTRL)) * Repeat(extra="n"),
         "reopen tab [<n>]|tab reopen [<n>]":
-            Key("ws-t") * Repeat(extra="n"),
+            Key("{}s-t".format(CTRL)) * Repeat(extra="n"),
         "(back|previous) tab [<n>]|tab (left|lease) [<n>]":
             Key("cs-tab") * Repeat(extra="n"),
         "(next|forward) tab [<n>]|tab (right|sauce) [<n>]":
             Key("c-tab") * Repeat(extra="n"),
         "close tab [<n>]|tab close [<n>]":
-            Key("w-w") * Repeat(extra='n'),
+            Key("{}-w".format(CTRL)) * Repeat(extra='n'),
         "go (back|prev|prior|previous) [<n>]":
-            Key("w-left/20") * Repeat(extra="n"),
+            Key("{}-left/20".format(CTRL)) * Repeat(extra="n"),
         "go (next|forward) [<n>]":
-            Key("w-right/20") * Repeat(extra="n"),
+            Key("{}-right/20".format(CTRL)) * Repeat(extra="n"),
         "find (next|forward) [match] [<n>]":
-            Key("w-g/20") * Repeat(extra="n"),
+            Key("{}-g/20".format(CTRL)) * Repeat(extra="n"),
 
         "find <search>":
-            Key("w-f/20") + Text("%(search)s"),
+            Key("{}-f/20".format(CTRL)) + Text("%(search)s"),
         "search <search>":
-            Key("w-l/20") + Text("%(search)s")
+            Key("{}-l/20".format(CTRL)) + Text("%(search)s")
     }
     extras = [
         Choice("nth", {
