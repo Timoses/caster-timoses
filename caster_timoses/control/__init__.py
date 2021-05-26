@@ -47,7 +47,7 @@ class ControlRule(MappingRule):
     mapping = {
         "bye mike":
             Function(sleep),
-        "hi mike":
+        "please wake up again mike":
             Function(wake)
     }
     extras = [
