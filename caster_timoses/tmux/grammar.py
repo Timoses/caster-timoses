@@ -1,4 +1,4 @@
-from dragonfly import Repeat, Pause, Function, Choice, MappingRule, Dictation, IntegerRef, Context, Key
+from dragonfly import Repeat, Pause, Function, Choice, MappingRule, Dictation, IntegerRef, Context, Key, Text
 
 from enum import Enum
 
@@ -67,7 +67,7 @@ def get_rules(emulate, prefix_letter, tmux=None):
                 Key('c-%s, %%(n)s' % (prefix_letter)) if emulate
                 else Function(tmux.window_n),
             "pane (<dir>|<n>)":
-                Function(lambda **data: Key('c-%s' % (data["dir"].value)).execute()) if emulate
+                Function(lambda **data: Key('c-%s' % (data["dir"].value)).execute() if 'dir' in data else (Key('c-%s, colon/20' % (prefix_letter)) + Text('select-pane -t %s\n' % (data["n"]))).execute()) if emulate
                 else Function(tmux.pane_dir_n),
             "pane (zoom|unzoom)":
                 Key('c-%s, z' % (prefix_letter)) if emulate
