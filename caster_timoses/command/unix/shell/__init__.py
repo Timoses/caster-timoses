@@ -1,4 +1,4 @@
-from dragonfly import MappingRule, Key, Grammar, Text
+from dragonfly import MappingRule, Key, Grammar, Text, IntegerRef
 from castervoice import Plugin
 
 class UnixShellRule(MappingRule):
@@ -16,13 +16,27 @@ class UnixShellRule(MappingRule):
                 Text('fg\n'),
             "shell background":
                 Text('bg\n'),
-            "shell up":
-                Key('a-k'),
-            "shell down":
-                Key('a-j'),
+            "shell up [<n>]":
+                Key('a-k:%(n)d'),
+            "shell down [<n>]":
+                Key('a-j:%(n)d'),
+            "shell history":
+                Text('history\n'),
+            "shell history <n> [<n2>] [<n3>] [<n4>]":
+                Text('!%(n)d BROKEN')
+        }
+        extras = [
+            IntegerRef("n", 1, 10),
+            IntegerRef("n2", 10, 11),
+            IntegerRef("n3", 10, 11),
+            IntegerRef("n4", 10, 11),
+        ]
+
+        defaults = {
+            "n": 1
         }
 
-        MappingRule.__init__(self, mapping=mapping)
+        MappingRule.__init__(self, mapping=mapping, extras=extras, defaults=defaults)
 
 
 
