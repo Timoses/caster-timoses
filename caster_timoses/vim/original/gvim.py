@@ -134,22 +134,20 @@ class CommandModeDisabler(CommandModeFinishRule):
 #
 #gvim_context = (terminal_context & vim_context)
 
-gvim_context = None
-
 # a. Normal mode - on by default
-normalModeGrammar = Grammar("gvim", context=gvim_context)
+normalModeGrammar = Grammar("gvim")
 normalModeGrammar.add_rule(NormalModeCCR())
 normalModeGrammar.add_rule(NormalModeSingleAction())
 #normalModeGrammar.load()
 
 # b. Insert and Command modes - waiting for activation
 # Bootstrap = insert-mode activating set of rules
-insertModeBootstrap = Grammar("Insert Mode bootstrap", context=gvim_context)
+insertModeBootstrap = Grammar("Insert Mode bootstrap")
 insertModeBootstrap.add_rule(InsertModeEnabler())
 #insertModeBootstrap.load()
 
 # Grammar = set of commands in the actual mode, when invoked by bootstrap
-insertModeGrammar = Grammar("Insert Mode grammar", context=gvim_context)
+insertModeGrammar = Grammar("Insert Mode grammar")
 # insertModeGrammar.add_rule(InsertModeCCR())
 insertModeGrammar.add_rule(InsertModeCommands())
 insertModeGrammar.add_rule(InsertModeDisabler())
@@ -159,11 +157,11 @@ insertModeGrammar.add_rule(deoplete.DeopleteRule())
 #insertModeGrammar.disable()
 
 # same for command mode
-commandModeBootstrap = Grammar("Command Mode bootstrap", context=gvim_context)
+commandModeBootstrap = Grammar("Command Mode bootstrap")
 commandModeBootstrap.add_rule(CommandModeEnabler())
 #commandModeBootstrap.load()
 
-commandModeGrammar = Grammar("Command Mode grammar", context=gvim_context)
+commandModeGrammar = Grammar("Command Mode grammar")
 commandModeGrammar.add_rule(CommandModeCommands())
 commandModeGrammar.add_rule(CommandModeDisabler())
 #commandModeGrammar.load()
