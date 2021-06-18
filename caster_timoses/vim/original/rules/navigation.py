@@ -43,7 +43,7 @@ class NavigationRule(MappingRule):
         "tab [<n>]": Key("%(n)d, g, t"),
 
         # Lines:
-        "go line <n100>": Text("%(n100)dgg"),
+        "go line <n1000>": Text("%(n1000)dgg"),
 
         # New:
         "new tab": Key("colon") + Text("tabnew") + Key("enter"),
@@ -52,7 +52,7 @@ class NavigationRule(MappingRule):
     }
     extras = [
         IntegerRef("n", 1, 10),
-        IntegerRef("n100", 1, 100),
+        IntegerRef("n1000", 1, 1000),
     ]
     defaults = {
         "n": 1,
