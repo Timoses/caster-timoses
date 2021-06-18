@@ -16,6 +16,10 @@ class UnixShellRule(MappingRule):
                 Text('fg\n'),
             "shell background":
                 Text('bg\n'),
+            "shell up":
+                Key('a-k'),
+            "shell down":
+                Key('a-j'),
         }
 
         MappingRule.__init__(self, mapping=mapping)
