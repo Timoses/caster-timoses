@@ -6,7 +6,7 @@ class UnixShellRule(MappingRule):
     def __init__(self, config):
 
         mapping = {
-            "shell terminate":
+            "shell (terminate|cancel)":
                 Key('c-c'),
             "shell log out":
                 Key('c-d'),
