@@ -1,6 +1,7 @@
 from getpass import getpass
 
 from pykeepass import PyKeePass
+from pykeepass.exceptions import CredentialsError
 
 from dragonfly import MappingRule, Grammar, Text, Key
 
@@ -22,7 +23,15 @@ class KeepassPlugin(Plugin):
         # Since Caster does not provide any encrypted state or config
         # we ask the user for his password on every initialization
         db_pw = getpass("Keepass - Enter password for DB %s: " % db_path)
-        self.kp = PyKeePass(db_path, password=db_pw)
+        retry = True
+        while retry:
+            try:
+                self.kp = PyKeePass(db_path, password=db_pw)
+                retry = False
+            except CredentialsError as ce:
+                print('')
+                db_pw = getpass("Keepass - Wrong password. Please try again for DB %s: " % db_path)
+
 
         self.entries = {}
 
