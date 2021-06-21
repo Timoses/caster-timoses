@@ -48,7 +48,7 @@ class KeepassPlugin(Plugin):
             mapping.update({'key pass ' + words: Text(entry.password)})
             mapping.update({'key user ' + words: Text(entry.username)})
             mapping.update({'key tab ' + words: Text(entry.username) + Key('tab') + Text(entry.password)})
-            mapping.update({'key shock ' + words: Text(entry.username) + Key('enter') + Text(entry.password)})
+            mapping.update({'key shock ' + words: Text(entry.username) + Key('enter/20') + Text(entry.password) + Key('enter')})
 
         rule = MappingRule(mapping=mapping)
         grammar = Grammar(name="Keepass")
