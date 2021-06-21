@@ -6,9 +6,9 @@ class UnixShellRule(MappingRule):
     def __init__(self, config):
 
         mapping = {
-            "shell cancel":
-                Key('c-c'),
             "shell terminate":
+                Key('c-c'),
+            "shell log out":
                 Key('c-d'),
             "shell suspend":
                 Key('c-z'),
@@ -23,7 +23,7 @@ class UnixShellRule(MappingRule):
             "shell history":
                 Text('history\n'),
             "shell history <n> [<n2>] [<n3>] [<n4>]":
-                Text('!%(n)d BROKEN')
+                Text('#!%(n)d BROKEN')
         }
         extras = [
             IntegerRef("n", 1, 10),
