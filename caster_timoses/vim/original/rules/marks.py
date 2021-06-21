@@ -6,7 +6,6 @@ class MarkMotionRule(MappingRule):
     exported = False
     mapping = {
         "go <letter>": Key('apostrophe, %(letter)s'),
-        "go line <letter>": Key('backtick, %(letter)s'),
     }
     extras = [
         letterChoice('letter'),
